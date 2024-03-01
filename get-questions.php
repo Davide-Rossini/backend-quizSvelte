@@ -82,6 +82,7 @@ try {
     $data = array(
         "status" => 1,
         "data" => array(
+            "idQuiz" => $_GET['id'],
             "domande" => $domande,
             "url_img" => $url_img['img']
         )
