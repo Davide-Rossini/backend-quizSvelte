@@ -61,7 +61,7 @@ try {
 
         $data[] = $result;
     }
-    echo json_encode($data);
+    echo '{"status":1, "data":' . json_encode($data) . '}';
 } catch (PDOException $ex) {
     sendError('error executing query', __LINE__);
 }
