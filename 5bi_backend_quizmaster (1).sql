@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 27, 2024 alle 23:45
--- Versione del server: 10.4.28-MariaDB
--- Versione PHP: 8.2.4
+-- Creato il: Feb 28, 2024 alle 11:27
+-- Versione del server: 10.4.32-MariaDB
+-- Versione PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -160,21 +160,46 @@ INSERT INTO `domanda` (`id`, `testo`, `fkQuiz`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `punteggio`
+--
+
+CREATE TABLE `punteggio` (
+  `id` int(11) NOT NULL,
+  `fkUtente` varchar(36) DEFAULT NULL,
+  `fkQuiz` int(11) DEFAULT NULL,
+  `dataConseguimento` datetime DEFAULT NULL,
+  `punteggio` decimal(3,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `punteggio`
+--
+
+INSERT INTO `punteggio` (`id`, `fkUtente`, `fkQuiz`, `dataConseguimento`, `punteggio`) VALUES
+(5, '65bc9d8956237', 3, '2024-02-02 08:50:24', 1.00),
+(6, '65bc9d9b19a48', 3, '2024-02-01 08:51:15', 0.20),
+(7, '65bc9daa3753f', 1, '2024-02-02 07:50:41', 0.80),
+(8, '65bc9d8956237', 1, '2024-01-01 08:51:15', 0.40);
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `quiz`
 --
 
 CREATE TABLE `quiz` (
   `id` int(11) NOT NULL,
-  `titolo` varchar(20) DEFAULT NULL
+  `titolo` varchar(20) DEFAULT NULL,
+  `url_icon` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `quiz`
 --
 
-INSERT INTO `quiz` (`id`, `titolo`) VALUES
-(1, 'Cultura Generale'),
-(3, 'Calcio');
+INSERT INTO `quiz` (`id`, `titolo`, `url_icon`) VALUES
+(1, 'Cultura Generale', 'footballIcon.png'),
+(3, 'Calcio', 'generalCultureIcon.png');
 
 -- --------------------------------------------------------
 
@@ -249,8 +274,8 @@ INSERT INTO `risposta` (`id`, `testo`) VALUES
 (55, 'Pele'),
 (56, 'Ronaldo Nazario'),
 (57, 'Argentina'),
-(58, 'Germany'),
-(59, 'Brazil'),
+(58, 'Germania'),
+(59, 'Brasile'),
 (60, '1990'),
 (61, '2002'),
 (62, '2018'),
@@ -273,6 +298,39 @@ INSERT INTO `risposta` (`id`, `testo`) VALUES
 (79, 'Ciro Immobile'),
 (80, 'Erling Haaland');
 
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `utente`
+--
+
+CREATE TABLE `utente` (
+  `id` varchar(36) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `hash` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `utente`
+--
+
+INSERT INTO `utente` (`id`, `username`, `email`, `hash`) VALUES
+('65bc9d8956237', 'steGiro', 'ste@gmail.com', '$2y$10$iUxrLYNamGX3yy234P75vutpiSBOwJCbNfI0neQ7jprmkQedMk9eC'),
+('65bc9d92812f8', 'nickBarb', 'barbi@gmail.com', '$2y$10$uYi6NagucHpEv3bp68aCe.GLKbfirAc6Gae66ajsjzezlqATiUKqq'),
+('65bc9d9b19a48', 'tambaPHP', 'tamba@gmail.com', '$2y$10$o9faNTeSCxBzVeC0x.hjbeFFPkfN2pi2GhccFMVXA0TEi0VFDSXVW'),
+('65bc9daa3753f', 'lory', 'lore@gmail.com', '$2y$10$K6lv32irBqIDDnoWvi.liebnZPlT7x8GS/vBLFT3ZcAkbwQpeOM1G'),
+('65bca35e08775', 'pezzeCISCO', 'pezze@gmail.com', '$2y$10$j/wBUW7whX.WN6Ayml8baODSvOdFyfdSSx0I061Rq0NOvDpOX89Km'),
+('65dd897f94fcb', 'comiCisco', 'comi@gmail.com', '$2y$10$phxpF8IgBb3RV1krdxrOcuvCM4eAJOd02qbKLQ8dROElCd2L5c2Re'),
+('65dda93ea05cc', 'emaxxx', 'emax@gmail.com', '$2y$10$r0bSqXc3M29JdY7F1LVgHuhUpOp8visWzNBOA1UuR9gC9qUqJQHP6'),
+('65dda99d2b7fd', 'Xzanna', 'ema.zanetti@gmail.com', '$2y$10$5VMt746DwamwOMLCMs5dfOQwIbUZOqsVjZg9wprOT3ugnvDNbHXZ6'),
+('65ddaea4575b7', 'lucCiv69', 'forzaInter@gmail.com', '$2y$10$rLL8iYizTBgnJoKdza2y6e5qqjjhlqmUE.UoH7tu3UWSmjLrVFrAW'),
+('65ddb5c26f639', 'tafakevin', 'tafa@gmail.com', '$2y$10$7iJzZewrKzV9qYOubZAQeetnFHIJxxiqFhXImFP6Lqaq8nhQok/P.'),
+('65ddb7608dca4', 'johnFORTNITE', 'john@gmail.com', '$2y$10$qATji3CXTofsGw8.w6ftluHnd5xANxatbJxqhvaSwWrnm0xwuutAu'),
+('65ddb7e650500', 'loreNAPOLI', 'kvara@gmail.com', '$2y$10$pAokiOflI1OpqwGcxg0.KuVKFseD.lhg.dOmBNTTKYq/wDABxzPEK'),
+('65ddb856d588d', 'churchill', 'cr7@gmail.com', '$2y$10$fG1zHe7bqjhzJsuj9euQGOtkPrSt2mPpIdZGRj53kKTKFFTHo6vp2'),
+('65ddbb1eaa6a4', 'touri', 'touri@gmail.com', '$2y$10$Gih4vIMZe2T7SN4/uLdobu65AgAS7e0m7MrSur1S3G/DQ/EUy6NTy');
+
 --
 -- Indici per le tabelle scaricate
 --
@@ -292,6 +350,14 @@ ALTER TABLE `domanda`
   ADD KEY `fkQuiz` (`fkQuiz`);
 
 --
+-- Indici per le tabelle `punteggio`
+--
+ALTER TABLE `punteggio`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkUtente` (`fkUtente`),
+  ADD KEY `fkQuiz` (`fkQuiz`);
+
+--
 -- Indici per le tabelle `quiz`
 --
 ALTER TABLE `quiz`
@@ -301,6 +367,12 @@ ALTER TABLE `quiz`
 -- Indici per le tabelle `risposta`
 --
 ALTER TABLE `risposta`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indici per le tabelle `utente`
+--
+ALTER TABLE `utente`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -314,10 +386,16 @@ ALTER TABLE `domanda`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT per la tabella `punteggio`
+--
+ALTER TABLE `punteggio`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT per la tabella `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `risposta`
@@ -341,6 +419,13 @@ ALTER TABLE `appartiene`
 --
 ALTER TABLE `domanda`
   ADD CONSTRAINT `domanda_ibfk_1` FOREIGN KEY (`fkQuiz`) REFERENCES `quiz` (`id`);
+
+--
+-- Limiti per la tabella `punteggio`
+--
+ALTER TABLE `punteggio`
+  ADD CONSTRAINT `punteggio_ibfk_1` FOREIGN KEY (`fkUtente`) REFERENCES `utente` (`id`),
+  ADD CONSTRAINT `punteggio_ibfk_2` FOREIGN KEY (`fkQuiz`) REFERENCES `quiz` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
